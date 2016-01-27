@@ -1,0 +1,2 @@
+graft django-scrub-pii
+include *.cfg *.rst *.in LICENSE
