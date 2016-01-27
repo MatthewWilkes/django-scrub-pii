@@ -9,3 +9,9 @@ install:
   - python setup.py dev
 script:
   - make test -k
+addons:
+  postgresql: "9.4"
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
