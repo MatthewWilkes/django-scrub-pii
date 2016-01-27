@@ -29,6 +29,7 @@ setup(
     packages=find_packages(),
     install_requires=[
         'setuptools',
+        'django==1.8',
     ],
     extras_require={
         'test': [

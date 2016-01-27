@@ -13,4 +13,4 @@ nosetests:
 
 flake8:
 	@echo "==== Running Flake8 ===="
-	@bin/flake8 django-scrub-pii *.py
+	@bin/flake8 scrubpii *.py

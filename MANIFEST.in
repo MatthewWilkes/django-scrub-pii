@@ -1,2 +1,2 @@
-graft django-scrub-pii
+graft scrubpii
 include *.cfg *.rst *.in LICENSE
