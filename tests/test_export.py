@@ -30,10 +30,10 @@ class SanitiseQueryTestCase(TestCase):
 class RealWorldTestCase(TestCase):
 
     def setUp(self):
-        mw = Person.objects.create(first_name="Matthew",
-                                   last_name="Wilkes",
-                                   email="matt@example.com",
-                                   date_of_birth=datetime.date(1986, 7, 19))
+        Person.objects.create(first_name="Matthew",
+                              last_name="Wilkes",
+                              email="matt@example.com",
+                              date_of_birth=datetime.date(1986, 7, 19))
         mb = Person.objects.create(first_name="Mary",
                                    last_name="Berry",
                                    email="mary@example.com",
@@ -45,19 +45,19 @@ class RealWorldTestCase(TestCase):
         ew = Person.objects.create(first_name="Elizabeth",
                                    last_name="Weir",
                                    email="liz@example.com",
-                                   date_of_birth=datetime.date(1948, 2, 20))                                   
+                                   date_of_birth=datetime.date(1948, 2, 20))
         bt = Book.objects.create(title="Baking things", author=mb)
-        tdliue = Book.objects.create(title="They don't like it up 'em", author=cd)
+        Book.objects.create(title="They don't like it up 'em", author=cd)
         tn = Book.objects.create(title="Treaty Negotiations", author=ew)
         Purchase.objects.create(book=bt, buyer_ip="192.0.2.1", purchased_at=datetime.datetime(2016, 1, 10, 12, 15))
         Purchase.objects.create(book=tn, buyer_ip="192.0.2.21", purchased_at=datetime.datetime(2013, 10, 4, 22, 48))
-    
+
     def test_query_sanitises_character_data(self):
         books = map(unicode, Book.objects.all())
         assert "Baking things by Mary Berry" in books
         assert "They don't like it up 'em by Clive Dunn" in books
         assert "Treaty Negotiations by Elizabeth Weir" in books
-        
+
         cursor = connection.cursor()
         cursor.execute(get_updates_for_model(Person))
 
@@ -69,10 +69,10 @@ class RealWorldTestCase(TestCase):
     def test_query_sanitises_IP_data(self):
         first_purchase = Purchase.objects.get(book__title="Baking things")
         second_purchase = Purchase.objects.get(book__title="Treaty Negotiations")
-        
+
         assert first_purchase.buyer_ip == "192.0.2.1"
         assert second_purchase.buyer_ip == "192.0.2.21"
-        
+
         cursor = connection.cursor()
         cursor.execute(get_updates_for_model(Purchase))
 
@@ -85,10 +85,10 @@ class RealWorldTestCase(TestCase):
         first_purchase = Purchase.objects.get(book__title="Baking things")
         second_purchase = Purchase.objects.get(book__title="Treaty Negotiations")
         clive = Person.objects.get(first_name="Clive")
-        
+
         assert first_purchase.purchased_at > second_purchase.purchased_at
         assert clive.date_of_birth == datetime.date(1920, 1, 9)
-        
+
         cursor = connection.cursor()
         cursor.execute(get_updates_for_model(Purchase))
         cursor.execute(get_updates_for_model(Person))
@@ -99,7 +99,6 @@ class RealWorldTestCase(TestCase):
 
         assert first_purchase.purchased_at == second_purchase.purchased_at
         assert clive.date_of_birth != datetime.date(1920, 1, 9)
-        
 
     def test_query_sanitises_passwords(self):
         from django.contrib.auth.models import User

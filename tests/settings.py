@@ -1,6 +1,5 @@
 from os.path import join as pjoin, abspath, dirname, pardir
 
-import django
 
 SECRET_KEY = 'SECRET'
 PROJ_ROOT = abspath(pjoin(dirname(__file__), pardir))

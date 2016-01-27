@@ -2,6 +2,7 @@ from .utils import get_sensitive_fields  # noqa
 
 import django.db.models.options as options
 
+
 def allow_sensitive_fields():
     """Patches the Django Options class to allow for setting sensitive_fields."""
     # Check for the presence of a marker on the options module that we've run already

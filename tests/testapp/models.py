@@ -1,8 +1,9 @@
 from django.db import models
 from scrubpii import allow_sensitive_fields
 
-
 allow_sensitive_fields()
+
+
 class Person(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
