@@ -3,7 +3,6 @@ from os.path import join as pjoin, abspath, dirname, pardir
 
 SECRET_KEY = 'SECRET'
 PROJ_ROOT = abspath(pjoin(dirname(__file__), pardir))
-DATA_ROOT = pjoin(PROJ_ROOT, 'data')
 
 ADMINS = (
     ('Example', 'tests@example.net'),
@@ -21,6 +20,7 @@ INSTALLED_APPS = (
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'tests.testapp',
+    'scrubpii',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

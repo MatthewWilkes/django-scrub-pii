@@ -66,7 +66,8 @@ def get_sensitive_fields(klass):
 
 def get_updates_for_model(klass):
     global salt
-    salt = uuid.uuid4()
+    if salt is None:
+        salt = uuid.uuid4()
 
     fields = []
     sensitive_fields = get_sensitive_fields(klass)
