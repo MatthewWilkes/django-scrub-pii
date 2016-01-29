@@ -17,6 +17,14 @@ OBFUSCATED_SOURCES = {
         "postgresql": "substring(md5(random()::text) FROM 0 FOR 10)",
         "default":    "'###########'",
     },
+    "TextField": {
+        "default":    ("'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce urna lorem, condimentum ut"
+                       " pretium commodo, iaculis eget lacus. In eget lorem varius erat auctor tempor. Pellentesque"
+                       " lacinia varius erat, sed eleifend magna consectetur et. Maecenas porttitor varius enim quis"
+                       " tincidunt. Maecenas feugiat ipsum a augue iaculis, a volutpat urna egestas. Cras molestie"
+                       " mauris non arcu tempor efficitur. Donec at felis lacus. Nulla posuere pretium magna at"
+                       " elementum.'"),
+    },
     "EmailField": {
         "sqlite":     "'user-' || id || '@example.net'",
         "default":    "concat('user-', id, '@example.net')",

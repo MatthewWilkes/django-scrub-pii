@@ -18,7 +18,7 @@ from tests.testapp.models import Person, Book, Purchase
 class ModelTestCase(TestCase):
 
     def test_app_is_decorated_with_sensitive_fields(self):
-        assert get_sensitive_fields(Person) == {'first_name', 'last_name', 'email', 'date_of_birth'}
+        assert get_sensitive_fields(Person) == {'biography', 'first_name', 'last_name', 'email', 'date_of_birth'}
 
     def test_app_with_no_sensitive_fields_is_correctly_decorated(self):
         assert get_sensitive_fields(Book) == set()
@@ -29,7 +29,7 @@ class ModelTestCase(TestCase):
 
     @override_settings(SCRUB_PII_ADDITIONAL_FIELDS={'testapp.Book': {'title', }})
     def test_marking_additional_fields_as_sensitive_doesnt_affect_unrelated_models(self):
-        assert get_sensitive_fields(Person) == {'first_name', 'last_name', 'email', 'date_of_birth'}
+        assert get_sensitive_fields(Person) == {'biography', 'first_name', 'last_name', 'email', 'date_of_birth'}
 
 
 class SanitiseQueryTestCase(TestCase):

@@ -8,6 +8,7 @@ with allow_sensitive_fields():
     class Person(models.Model):
         first_name = models.CharField(max_length=30)
         last_name = models.CharField(max_length=30)
+        biography = models.TextField()
         date_of_birth = models.DateField()
         email = models.EmailField()
 
@@ -15,7 +16,7 @@ with allow_sensitive_fields():
             return "{0} {1}".format(self.first_name, self.last_name)
 
         class Meta:
-            sensitive_fields = {'last_name', 'first_name', 'email', 'date_of_birth'}
+            sensitive_fields = {'biography', 'last_name', 'first_name', 'email', 'date_of_birth'}
 
 
 @python_2_unicode_compatible
