@@ -1,5 +1,12 @@
 A django add-on that allows models to be decorated with information about which fields contain sensitive information, and an associated management command that creates a script to remove that information.
 
+.. image:: https://travis-ci.org/MatthewWilkes/django-scrub-pii.svg?branch=master
+    :target: https://travis-ci.org/MatthewWilkes/django-scrub-pii
+
+.. image:: https://coveralls.io/repos/github/MatthewWilkes/django-scrub-pii/badge.svg?branch=master
+    :target: https://coveralls.io/github/MatthewWilkes/django-scrub-pii?branch=master
+
+
 INSTALL
 =======
 

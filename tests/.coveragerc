@@ -1,5 +1,5 @@
 [run]
-source = django-scrub-pii
+source = scrubpii
 
 [report]
 exclude_lines =
