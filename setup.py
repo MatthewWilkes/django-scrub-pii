@@ -14,7 +14,7 @@ def as_blocktext(text):
 
 setup(
     name='django-scrub-pii',
-    version='1.1',
+    version='1.1.1',
     description='A django add-on that allows models to be decorated with information about which fields contain '
                 'sensitive information, and an associated management command that creates a script to remove that'
                 ' information.',

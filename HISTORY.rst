@@ -2,6 +2,13 @@ Changelog
 =========
     
 
+1.1.1 (2016-01-29)
+----------------
+
+- Fix a bug in 1.1 that meant the additional sensitive fields on model setting was an all-or-nothing affair.
+  [MatthewWilkes]
+
+
 1.1 (2016-01-29)
 ----------------
 
