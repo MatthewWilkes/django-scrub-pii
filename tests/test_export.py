@@ -1,8 +1,11 @@
 import datetime
-import pytest
+from StringIO import StringIO
 
+from django.core.management import call_command
 from django.db import connection
 from django.test import TestCase
+import pytest
+from scrubpii import allow_sensitive_fields
 from scrubpii.utils import get_sensitive_fields, get_updates_for_model
 
 from tests.testapp.models import Person, Book, Purchase
@@ -122,3 +125,29 @@ class RealWorldTestCase(TestCase):
         assert editor.email == 'user-2@example.net'
         assert check_password("password", admin.password)
         assert check_password("password", editor.password)
+
+    def test_export_script(self):
+        out = StringIO()
+        call_command('get_sensitive_data_removal_script', stdout=out)
+        script = out.getvalue().strip()
+        # Check transactionality
+        assert script.startswith("BEGIN;")
+        assert script.endswith("COMMIT;")
+        # Check person model
+        assert 'UPDATE testapp_person' in script
+        assert 'email = ' in script
+        assert 'last_name = ' in script
+        assert 'first_name = ' in script
+        assert 'date_of_birth = ' in script
+        # Check Purchase model
+        assert 'UPDATE testapp_purchase' in script
+        assert 'purchased_at = ' in script
+        assert 'buyer_ip = ' in script
+
+    def test_futureproofing(self):
+        import django.db.models.options as options
+        options.DEFAULT_NAMES = options.DEFAULT_NAMES + ('sensitive_fields',)
+        with pytest.raises(Exception):
+            with allow_sensitive_fields():
+                pass
+
