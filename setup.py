@@ -12,7 +12,7 @@ def read(*rnames):
 
 setup(
     name='django-scrub-pii',
-    version='1.0',
+    version='1.1dev',
     description='A django add-on that allows models to be decorated with information about which fields contain '
                 'sensitive information, and an associated management command that creates a script to remove that'
                 ' information.',
