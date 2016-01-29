@@ -26,8 +26,7 @@ OBFUSCATED_SOURCES = {
                        " elementum.'"),
     },
     "EmailField": {
-        "sqlite":     "'user-' || id || '@example.net'",
-        "default":    "concat('user-', id, '@example.net')",
+        "default":     "'user-' || id || '@example.net'",
     },
     "DateField": {
         "postgresql":  "date '1990-06-02'",
@@ -50,8 +49,7 @@ OBFUSCATED_SOURCES = {
         "default":    "'2001:db8::1'"
     },
     "username": {
-        "sqlite":     "'user-' || id",
-        "default":    "concat('user-', id)",
+        "default":     "'user-' || id",
     },
     "password": {
         "default":    "'{0}'".format(make_password('password', hasher='md5')),
