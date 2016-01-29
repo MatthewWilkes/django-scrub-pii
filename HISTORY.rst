@@ -2,6 +2,13 @@ Changelog
 =========
     
 
+1.1.2 (2016-01-29)
+----------------
+
+- Add TextField to the types that can be sanitised.
+  [MatthewWilkes]
+
+
 1.1.1 (2016-01-29)
 ----------------
 
