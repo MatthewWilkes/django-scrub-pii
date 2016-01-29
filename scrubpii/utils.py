@@ -66,7 +66,7 @@ def get_sensitive_fields(klass):
     additional_fields = getattr(settings, 'SCRUB_PII_ADDITIONAL_FIELDS', None)
     if additional_fields is not None:
         class_ref = "{0}.{1}".format(klass._meta.app_label, klass.__name__)
-        annotated = annotated.union(additional_fields.get(class_ref))
+        annotated = annotated.union(additional_fields.get(class_ref, set()))
     return annotated
 
 

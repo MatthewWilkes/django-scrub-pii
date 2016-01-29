@@ -27,6 +27,10 @@ class ModelTestCase(TestCase):
     def test_marking_additional_fields_as_sensitive_using_settings(self):
         assert get_sensitive_fields(Book) == {'title', }
 
+    @override_settings(SCRUB_PII_ADDITIONAL_FIELDS={'testapp.Book': {'title', }})
+    def test_marking_additional_fields_as_sensitive_doesnt_affect_unrelated_models(self):
+        assert get_sensitive_fields(Person) == {'first_name', 'last_name', 'email', 'date_of_birth'}
+
 
 class SanitiseQueryTestCase(TestCase):
 
