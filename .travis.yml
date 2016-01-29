@@ -1,17 +1,54 @@
 language: python
+
 python:
-  - 2.6
-  - 2.7
-  - 3.2
-  - 3.3
-  - pypy
+  - "3.4"
+env:
+  - TOX_ENV=py27-django14-postgres
+  - TOX_ENV=py27-django14-sqlite
+  - TOX_ENV=py27-django15-postgres
+  - TOX_ENV=py27-django15-sqlite
+  - TOX_ENV=py27-django16-postgres
+  - TOX_ENV=py27-django16-sqlite
+  - TOX_ENV=py27-django17-postgres
+  - TOX_ENV=py27-django17-sqlite
+  - TOX_ENV=py27-django18-postgres
+  - TOX_ENV=py27-django18-sqlite
+  - TOX_ENV=py27-django19-postgres
+  - TOX_ENV=py27-django19-sqlite
+  - TOX_ENV=py34-django15-postgres
+  - TOX_ENV=py34-django15-sqlite
+  - TOX_ENV=py34-django16-postgres
+  - TOX_ENV=py34-django16-sqlite
+  - TOX_ENV=py34-django17-postgres
+  - TOX_ENV=py34-django17-sqlite
+  - TOX_ENV=py34-django18-postgres
+  - TOX_ENV=py34-django18-sqlite
+  - TOX_ENV=py34-django19-postgres
+  - TOX_ENV=py34-django19-sqlite
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq $APT
+
+after_failure:
+  - cat /home/travis/.pip/pip.log
+  - coveralls --data_file tests/.coverage
+ 
+after_success:
+  - coveralls --data_file tests/.coverage
+
 install:
-  - python setup.py dev
+  - pip install -q flake8 tox
+
 script:
-  - make test -k
+  - tox -e $TOX_ENV
+ 
 addons:
   postgresql: "9.4"
+ 
 services:
   - postgresql
+
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
+  - psql -c 'create database scrubpii;' -U postgres
+
