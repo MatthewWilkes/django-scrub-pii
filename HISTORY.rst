@@ -1,6 +1,13 @@
 Changelog
 =========
-    
+
+
+1.1.3 (2016-01-29)
+----------------
+
+- Add support for later postgres versions.
+  [MatthewWilkes]
+
 
 1.1.2 (2016-01-29)
 ----------------
