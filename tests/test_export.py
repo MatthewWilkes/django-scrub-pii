@@ -7,6 +7,7 @@ except ImportError:
 from django.core.management import call_command
 from django.db import connection
 from django.test import TestCase
+from django.test.utils import override_settings
 import pytest
 from scrubpii import allow_sensitive_fields
 from scrubpii.utils import get_sensitive_fields, get_updates_for_model
@@ -21,6 +22,10 @@ class ModelTestCase(TestCase):
 
     def test_app_with_no_sensitive_fields_is_correctly_decorated(self):
         assert get_sensitive_fields(Book) == set()
+
+    @override_settings(SCRUB_PII_ADDITIONAL_FIELDS={'testapp.Book': {'title', }})
+    def test_marking_additional_fields_as_sensitive_using_settings(self):
+        assert get_sensitive_fields(Book) == {'title', }
 
 
 class SanitiseQueryTestCase(TestCase):

@@ -1,5 +1,6 @@
 import uuid
 from django.db import connection
+from django.conf import settings
 from django.contrib.auth.hashers import make_password
 
 salt = None
@@ -61,7 +62,12 @@ def get_value_method(field, database='default'):
 
 
 def get_sensitive_fields(klass):
-    return getattr(klass._meta, 'sensitive_fields', set())
+    annotated = getattr(klass._meta, 'sensitive_fields', set())
+    additional_fields = getattr(settings, 'SCRUB_PII_ADDITIONAL_FIELDS', None)
+    if additional_fields is not None:
+        class_ref = "{0}.{1}".format(klass._meta.app_label, klass.__name__)
+        annotated = annotated.union(additional_fields.get(class_ref))
+    return annotated
 
 
 def get_updates_for_model(klass):
