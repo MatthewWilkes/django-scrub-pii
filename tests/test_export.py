@@ -1,5 +1,8 @@
 import datetime
-from StringIO import StringIO
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import StringIO
 
 from django.core.management import call_command
 from django.db import connection
@@ -56,7 +59,7 @@ class RealWorldTestCase(TestCase):
         Purchase.objects.create(book=tn, buyer_ip="192.0.2.21", purchased_at=datetime.datetime(2013, 10, 4, 22, 48))
 
     def test_query_sanitises_character_data(self):
-        books = map(unicode, Book.objects.all())
+        books = ["{0}".format(book) for book in Book.objects.all()]
         assert "Baking things by Mary Berry" in books
         assert "They don't like it up 'em by Clive Dunn" in books
         assert "Treaty Negotiations by Elizabeth Weir" in books
@@ -64,7 +67,7 @@ class RealWorldTestCase(TestCase):
         cursor = connection.cursor()
         cursor.execute(get_updates_for_model(Person))
 
-        books = map(unicode, Book.objects.all())
+        books = ["{0}".format(book) for book in Book.objects.all()]
         assert "Baking things by Mary Berry" not in books
         assert "They don't like it up 'em by Clive Dunn" not in books
         assert "Treaty Negotiations by Elizabeth Weir" not in books
@@ -150,4 +153,3 @@ class RealWorldTestCase(TestCase):
         with pytest.raises(Exception):
             with allow_sensitive_fields():
                 pass
-
