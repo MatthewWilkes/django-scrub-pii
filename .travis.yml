@@ -32,10 +32,6 @@ before_install:
 
 after_failure:
   - cat /home/travis/.pip/pip.log
-  - coveralls -b tests/ -d tests/.coverage
- 
-after_success:
-  - coveralls -b tests/ -d tests/.coverage
 
 install:
   - pip install -q flake8 tox
