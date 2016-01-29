@@ -2,8 +2,8 @@ Changelog
 =========
     
 
-0.1 (unreleased)
+1.0 (2016-01-29)
 ----------------
 
-- Initial release.
-  [Matthew Wilkes]
+- Initial release, basic support for built in field types, especially on postgres. Limited sqlite support.
+  [MatthewWilkes]
