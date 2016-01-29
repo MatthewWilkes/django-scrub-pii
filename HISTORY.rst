@@ -2,7 +2,7 @@ Changelog
 =========
     
 
-1.1 (Unreleased)
+1.1 (2016-01-29)
 ----------------
 
 - Allow specification of additional model fields to treat as sensitive using django settings.
