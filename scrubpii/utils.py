@@ -12,7 +12,7 @@ UPDATE_QUERY_TEMPLATE = """
 ASSIGNMENT_TEMPLATE = """
         {field_name} = {value_method}"""
 
-OBFUSCATED_SOURCES = {
+FIELD_TYPE_MAPPING = {
     "CharField": {
         "postgresql": "substring(md5(random()::text) FROM 0 FOR 10)",
         "default":    "'###########'",
@@ -48,20 +48,29 @@ OBFUSCATED_SOURCES = {
                          )::inet""",
         "default":    "'2001:db8::1'"
     },
+    "URLField": {
+        "default":    "'http://example.com'",
+    },
+}
+
+FIELD_NAME_MAPPING = {
     "username": {
         "default":     "'user-' || id",
     },
     "password": {
         "default":    "'{0}'".format(make_password('password', hasher='md5')),
-    }
+    },
 }
 
 
 def get_value_method(field, database='default'):
-    try:
+    field_type_name = type(field).__name__
+    if field.column in FIELD_NAME_MAPPING:
         options = OBFUSCATED_SOURCES[field.column]
-    except KeyError:
-        options = OBFUSCATED_SOURCES[type(field).__name__]
+    elif field_type_name in FIELD_TYPE_MAPPING:
+        options = OBFUSCATED_SOURCES[field_type_name]
+    else:
+        raise NotImplementedError()
     if database in options:
         return options[database]
     return options['default']
